@@ -1,0 +1,10 @@
+---
+import RouterRenderer from './router';
+---
+<div class="flex items-center justify-center bg-gradient-to-l from-sky-400 to-indigo-600 min-h-screen">
+  <RouterRenderer
+    client:load
+    pathname={Astro.url.pathname}
+    search={Astro.url.search}
+  />
+</div>
