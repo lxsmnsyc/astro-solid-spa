@@ -1,12 +1,12 @@
 import { JSX } from 'solid-js';
-import { Link } from 'solid-tiny-router';
+import { Link } from '../internal/router';
 
 export default function Index(): JSX.Element {
   return (
     <div class="p-4 rounded-lg bg-indigo-900 bg-opacity-25 flex flex-col space-y-4">
       <span class="text-2xl text-white font-sans">
         {'Welcome to '}
-        <span class="bg-white bg-opacity-25 font-mono p-2 rounded m-1">solid-tiny-router</span>
+        <span class="bg-white bg-opacity-25 font-mono p-2 rounded m-1">Astro + Solid SPA</span>
         !
       </span>
       <div class="flex flex-col space-y-1">

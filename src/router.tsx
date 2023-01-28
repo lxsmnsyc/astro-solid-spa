@@ -1,5 +1,55 @@
-import { JSX, lazy } from 'solid-js';
-import { Router, createRouterTree } from 'solid-tiny-router';
+import {
+  createContext,
+  createResource,
+  JSX,
+  lazy,
+  Show,
+  Suspense,
+  useContext,
+} from 'solid-js';
+import {
+  createRouterTree,
+  matchRoute,
+  Page,
+  Router,
+  SSRPage,
+  useRouter,
+} from './internal/router';
+
+const Data = createContext<{ data: any, initial: boolean }>();
+
+export interface PageProps<T> {
+  data: T;
+}
+
+function createPage<T>(Comp: (props: PageProps<T>) => JSX.Element): () => JSX.Element {
+  return function CustomPage() {
+    const ctx = useContext(Data)!;
+    const router = useRouter();
+
+    const [data] = createResource(
+      async () => {
+        const params = new URLSearchParams(router.search);
+        params.set('.get', '');
+        const response = await fetch(`${router.pathname}?${params.toString()}`);
+        const result = (await response.json()) as T;
+        return result;
+      },
+      ctx.initial ? {
+        initialValue: ctx.data as T,
+        ssrLoadFrom: 'initial',
+      } : {},
+    );
+
+    return (
+      <Suspense>
+        <Show when={data()} keyed>
+          {(loaded) => <Comp data={loaded} />}
+        </Show>
+      </Suspense>
+    );
+  };
+}
 
 function normalizeRoute(path: string): string {
   const base = path.substring(8, path.length - 4);
@@ -9,29 +59,45 @@ function normalizeRoute(path: string): string {
   return base;
 }
 
-const routesGlob = import.meta.glob<boolean, string, any>('./routes/**/*.tsx');
+const routesGlob = import.meta.glob<boolean, string, SSRPage>('./routes/**/*.tsx');
 
-const rawRoutes = Object.entries(routesGlob)
+const rawPages = Object.entries(routesGlob)
   .map(([key, value]) => ({
     path: normalizeRoute(key),
-    component: lazy(value),
+    value: createPage(lazy(value)),
+  }));
+const rawLoaders = Object.entries(routesGlob)
+  .map(([key, value]) => ({
+    path: normalizeRoute(key),
+    value: async () => {
+      const result = await value();
+      return result.load;
+    },
   }));
 
-const routes = createRouterTree(rawRoutes);
+const pages = createRouterTree(rawPages);
+const loaders = createRouterTree(rawLoaders);
 
-export interface RouterProps {
+export function getLoader(url: URL) {
+  return matchRoute(loaders, url.pathname);
+}
+
+export interface RouterProps<T> {
+  data: T;
   pathname: string;
   search: string;
 }
 
-export default function RouterRenderer(props: RouterProps): JSX.Element {
+export default function RouterRenderer<T>(props: RouterProps<T>): JSX.Element {
   return (
-    <Router
-      routes={routes}
-      location={{
-        pathname: props.pathname,
-        search: props.search,
-      }}
-    />
+    <Data.Provider value={{ initial: true, data: props.data }}>
+      <Router
+        routes={pages}
+        location={{
+          pathname: props.pathname,
+          search: props.search,
+        }}
+      />
+    </Data.Provider>
   );
 }

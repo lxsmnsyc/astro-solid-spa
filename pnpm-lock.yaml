@@ -9,7 +9,6 @@ specifiers:
   eslint-config-lxsmnsyc: ^0.4.8
   postcss: ^8.4.21
   solid-js: ^1.6.9
-  solid-tiny-router: ^0.2.5
   tailwindcss: ^3.2.4
   typescript: ^4.9.4
 
@@ -17,7 +16,6 @@ dependencies:
   '@astrojs/solid-js': 2.0.0_solid-js@1.6.9
   '@astrojs/tailwind': 3.0.0_uhsc6pehih5huiqhsy5i7sy5um
   solid-js: 1.6.9
-  solid-tiny-router: 0.2.5_solid-js@1.6.9
   tailwindcss: 3.2.4_postcss@8.4.21
 
 devDependencies:
@@ -4022,15 +4020,6 @@ packages:
     resolution: {integrity: sha512-kV3fMmm+1C2J95c8eDOPKGfZHnuAkHUBLG4hX1Xu08bXeAIPqmxuz/QdH3B8SIdTp3EatBVIyA6RCes3hrGzpg==}
     dependencies:
       csstype: 3.1.1
-    dev: false
-
-  /solid-tiny-router/0.2.5_solid-js@1.6.9:
-    resolution: {integrity: sha512-sTwKSgT7vwlByWuDEiTnIaGyDdsyxrDrUM7LLlg10ZTKclPz9Xp/LGgcQUUh6o+SCdzjx1RDSE3ZfdGtlbv6Og==}
-    engines: {node: '>=10'}
-    peerDependencies:
-      solid-js: ^1.2
-    dependencies:
-      solid-js: 1.6.9
     dev: false
 
   /source-map-js/1.0.2:

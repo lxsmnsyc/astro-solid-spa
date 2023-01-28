@@ -1,5 +1,5 @@
 import { JSX } from 'solid-js';
-import { Link } from 'solid-tiny-router';
+import { Link } from '../internal/router';
 
 export default function A(): JSX.Element {
   return (

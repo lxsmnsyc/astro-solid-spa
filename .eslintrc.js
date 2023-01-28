@@ -1,15 +1,14 @@
 module.exports = {
   "root": true,
   "extends": [
-    "lxsmnsyc/typescript/react"
+    "lxsmnsyc/typescript/solid"
   ],
   "parserOptions": {
     "project": "./tsconfig.eslint.json",
     "tsconfigRootDir": __dirname,
   },
   "rules": {
-    "react/no-unknown-property": "off",
-    "react/destructuring-assignment": "off",
-    "no-unused-expressions": "off"
+    "no-param-reassign": "off",
+    "@typescript-eslint/no-unsafe-return": "off"
   }
 };

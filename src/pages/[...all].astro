@@ -1,0 +1,22 @@
+---
+import Root from '../root.astro';
+import { getLoader } from '../router';
+
+const loader = getLoader(Astro.url);
+let data = {};
+if (loader && loader.value) {
+  const callback = await loader.value();
+  if (callback) {
+    data = await callback(Astro.request, loader.params);
+  }
+}
+if (Astro.url.searchParams.has('.get')) {
+  return new Response(JSON.stringify(data), {
+    status: 200,
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+}
+---
+<Root data={data} />

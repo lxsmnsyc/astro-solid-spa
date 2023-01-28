@@ -1,4 +1,4 @@
-import { useRouter } from 'solid-tiny-router';
+import { useRouter } from '../internal/router';
 
 export default function Index() {
   const router = useRouter<{ id: string }>();
