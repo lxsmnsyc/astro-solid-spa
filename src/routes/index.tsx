@@ -1,5 +1,15 @@
 import { JSX } from 'solid-js';
-import { Link } from '../internal/router';
+import { Link, LoadResult } from '../internal/router';
+
+export function load(): LoadResult<undefined> {
+  return {
+    props: undefined,
+    meta: {
+      title: 'Astro + Solid SPA',
+      description: 'Home page of Astro + Solid SPA',
+    },
+  };
+}
 
 export default function Index(): JSX.Element {
   return (

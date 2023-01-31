@@ -9,6 +9,7 @@ module.exports = {
   },
   "rules": {
     "no-param-reassign": "off",
-    "@typescript-eslint/no-unsafe-return": "off"
+    "@typescript-eslint/no-unsafe-return": "off",
+    "no-restricted-syntax": "off"
   }
 };

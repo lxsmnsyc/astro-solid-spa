@@ -3,20 +3,22 @@ import {
   createResource,
   JSX,
   lazy,
+  onMount,
   Show,
   Suspense,
   useContext,
 } from 'solid-js';
+import useMeta from './internal/meta/use-meta';
 import {
   createRouterTree,
+  LoadResult,
   matchRoute,
-  Page,
   Router,
   SSRPage,
   useRouter,
 } from './internal/router';
 
-const Data = createContext<{ data: any, initial: boolean }>();
+const Data = createContext<{ data: LoadResult<any>, initial: boolean }>();
 
 export interface PageProps<T> {
   data: T;
@@ -32,19 +34,28 @@ function createPage<T>(Comp: (props: PageProps<T>) => JSX.Element): () => JSX.El
         const params = new URLSearchParams(router.search);
         params.set('.get', '');
         const response = await fetch(`${router.pathname}?${params.toString()}`);
-        const result = (await response.json()) as T;
+        const result = (await response.json()) as LoadResult<T>;
         return result;
       },
       ctx.initial ? {
-        initialValue: ctx.data as T,
+        initialValue: ctx.data as LoadResult<T>,
         ssrLoadFrom: 'initial',
       } : {},
     );
 
+    onMount(() => {
+      ctx.initial = false;
+    });
+
     return (
       <Suspense>
         <Show when={data()} keyed>
-          {(loaded) => <Comp data={loaded} />}
+          {(loaded) => {
+            if (!ctx.initial) {
+              useMeta(loaded);
+            }
+            return <Comp data={loaded.props} />;
+          }}
         </Show>
       </Suspense>
     );
@@ -83,7 +94,7 @@ export function getLoader(url: URL) {
 }
 
 export interface RouterProps<T> {
-  data: T;
+  data: LoadResult<T>;
   pathname: string;
   search: string;
 }

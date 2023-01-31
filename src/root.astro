@@ -1,9 +1,18 @@
 ---
+import RenderMeta from './internal/meta/render-meta.astro';
+import { LoadResult } from './internal/router';
 import RouterRenderer from './router';
+
+interface Props extends LoadResult<any> {
+
+}
+
 ---
 <html lang="en">
   <head>
-    <title>Astro + Solid SPA w/ List</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <RenderMeta {...(Astro.props.data ?? {})} />
   </head>
   <body>
     <div class="flex items-center justify-center bg-gradient-to-l from-sky-400 to-indigo-600 min-h-screen">

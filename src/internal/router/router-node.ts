@@ -1,4 +1,5 @@
 import { JSX } from 'solid-js';
+import { Meta } from '../meta/interface';
 
 export interface RouterParams {
   [key: string]: string | string[];
@@ -209,7 +210,14 @@ export interface Page<T> {
 export type PageRoute = Route<Page<any>>;
 export type PageRouter = RouterNode<Page<any>>;
 
-export type Load = <T, P extends RouterParams>(request: Request, params: P) => Promise<T>;
+export interface LoadResult<T> {
+  props: T;
+  meta?: Meta;
+}
+export type Load = <T, P extends RouterParams>(
+  request: Request,
+  params: P,
+) => (Promise<LoadResult<T>> | LoadResult<T>);
 export type LoadRoute = Route<Load>;
 export type LoadRouter = RouterNode<Load>;
 

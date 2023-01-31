@@ -3,14 +3,9 @@ import {
   createSignal,
   JSX,
   onCleanup,
-  Show,
 } from 'solid-js';
 import { useRouter } from './Router';
 import { isLocalURL, isModifiedEvent, omitProps } from './utilities';
-
-function Throwable(props: { error: Error }): JSX.Element {
-  throw props.error;
-}
 
 type BaseAnchorAttributes = JSX.AnchorHTMLAttributes<HTMLAnchorElement>;
 
@@ -59,6 +54,13 @@ export default function Link(
   });
 
   const [error, setError] = createSignal<Error>();
+
+  createEffect(() => {
+    const instance = error();
+    if (instance) {
+      throw instance;
+    }
+  });
 
   const [visible, setVisible] = createSignal(false);
 
@@ -115,27 +117,16 @@ export default function Link(
   });
 
   return (
-    <>
-      <Show when={error()} keyed>
-        {(err) => <Throwable error={err} />}
-      </Show>
-      <a
-        ref={(e) => {
-          if (typeof props.ref === 'function') {
-            props.ref(e);
-          }
-          anchorRef = e;
-        }}
-        {...omitProps(props, [
-          'prefetch',
-          'scroll',
-          'ref',
-          'replace',
-          'children',
-        ])}
-      >
-        {props.children}
-      </a>
-    </>
+    <a
+      {...omitProps(props, ['prefetch', 'scroll', 'replace', 'children'])}
+      ref={(e: HTMLAnchorElement) => {
+        if (typeof props.ref === 'function') {
+          props.ref(e);
+        }
+        anchorRef = e;
+      }}
+    >
+      {props.children}
+    </a>
   );
 }

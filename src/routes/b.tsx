@@ -1,5 +1,15 @@
 import { JSX } from 'solid-js';
-import { Link } from '../internal/router';
+import { Link, LoadResult } from '../internal/router';
+
+export function load(): LoadResult<undefined> {
+  return {
+    props: undefined,
+    meta: {
+      title: 'Page B',
+      description: 'An example page for static routing',
+    },
+  };
+}
 
 export default function B(): JSX.Element {
   return (

@@ -1,0 +1,16 @@
+---
+import { LoadResult } from '../router';
+import resolveMeta from './resolve-meta';
+
+interface Props extends LoadResult<any> {
+  // 
+}
+
+const resolved = resolveMeta(Astro.props);
+---
+<!--astro:meta:start-->
+{resolved.map((item) => {
+  const Comp = item.tag;
+  return <Comp {...(item.attributes ?? {})}>{item.content}</Comp>;
+})}
+<!--astro:meta:end-->
