@@ -14,11 +14,45 @@ export interface ViewportMeta {
   ['viewport-fit']?: 'auto' | 'contain' | 'cover';
 }
 
+export interface OpenGraphImageMeta {
+  url: string;
+  secure_url?: string;
+  type?: string;
+  width?: number | string;
+  height?: number | string;
+  alt?: string;
+}
+
+export interface OpenGraphVideoMeta {
+  url: string;
+  secure_url?: string;
+  type?: string;
+  width?: number | string;
+  height?: number | string;
+  alt?: string;
+}
+
+export interface OpenGraphAudioMeta {
+  url: string;
+  secure_url?: string;
+  type?: string;
+}
+
+type OneOrMore<T> = T | T[];
+
+export type OpenGraphMediaKeys = 'image' | 'audio' | 'video';
+
 export interface OpenGraphMeta {
+  type?: string;
   title?: string;
-  description?: string;
+  image?: OneOrMore<OpenGraphImageMeta | string>;
   url?: string;
-  image?: string;
+  audio?: OneOrMore<OpenGraphAudioMeta | string>;
+  description?: string;
+  determiner?: 'a' | 'an' | 'the' | 'auto';
+  locale?: string;
+  site_name?: string;
+  video?: OneOrMore<OpenGraphVideoMeta | string>;
 }
 
 export type RobotsMetaValues =
