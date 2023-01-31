@@ -1,4 +1,4 @@
-import { JSX } from 'solid-js';
+import { Component, JSX } from 'solid-js';
 import { Meta } from '../meta/interface';
 
 export interface RouterParams {
@@ -236,6 +236,6 @@ export type LoadRoute = Route<Load>;
 export type LoadRouter = RouterNode<Load>;
 
 export interface SSRPage {
-  default: Page<any>;
+  default: Component<any>;
   load?: Load;
 }
