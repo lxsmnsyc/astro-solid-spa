@@ -210,18 +210,32 @@ export interface Page<T> {
 export type PageRoute = Route<Page<any>>;
 export type PageRouter = RouterNode<Page<any>>;
 
-export interface LoadResult<T> {
+export interface SuccessResult<T> {
   props: T;
   meta?: Meta;
 }
+
+export interface NotFoundResult {
+  notFound: true;
+}
+
+export interface RedirectResult {
+  redirect: string;
+}
+
+export type LoadResult<T> =
+  | SuccessResult<T>
+  | NotFoundResult
+  | RedirectResult;
+
 export type Load = <T, P extends RouterParams>(
   request: Request,
   params: P,
-) => (Promise<LoadResult<T>> | LoadResult<T>);
+) => (Promise<LoadResult<T>>);
 export type LoadRoute = Route<Load>;
 export type LoadRouter = RouterNode<Load>;
 
 export interface SSRPage {
-  default: Page<{ data: any }>;
+  default: Page<any>;
   load?: Load;
 }

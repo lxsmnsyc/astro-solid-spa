@@ -5,13 +5,19 @@ const sleep = (ms: number) => new Promise((res) => {
   setTimeout(res, ms, true);
 });
 
+export interface Props {
+  data: string;
+}
+
 export async function load(_request: Request, params: { list: string[] }) {
   await sleep(1000);
 
   const data = params.list.join(', ');
 
   return {
-    props: data,
+    props: {
+      data,
+    },
     meta: {
       title: `Wildcard Page ${data}`,
       description: 'An example page for wildcard routing',
@@ -19,7 +25,7 @@ export async function load(_request: Request, params: { list: string[] }) {
   };
 }
 
-export default function CaptureAllRoute(props: { data: string }): JSX.Element {
+export default function CaptureAllRoute(props: Props): JSX.Element {
   return (
     <div class="p-4 rounded-lg bg-indigo-900 bg-opacity-25 flex flex-col space-y-4">
       <span class="text-2xl text-white font-sans">

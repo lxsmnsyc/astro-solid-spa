@@ -19,5 +19,8 @@ if (Astro.url.searchParams.has('.get')) {
     }
   })
 }
+if ('redirect' in data) {
+  return Astro.redirect(data.redirect);
+}
 ---
 <Root data={data} />

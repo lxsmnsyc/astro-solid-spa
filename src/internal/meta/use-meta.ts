@@ -1,8 +1,8 @@
 import { createEffect } from 'solid-js';
-import { LoadResult } from '../router';
+import { SuccessResult } from '../router';
 import resolveMeta from './resolve-meta';
 
-export default function useMeta<T>(source: LoadResult<T>) {
+export default function useMeta<T>(source: SuccessResult<T>) {
   createEffect(() => {
     // Get anchor node
     let node = document.head.firstChild;

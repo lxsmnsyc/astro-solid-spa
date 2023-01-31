@@ -1,4 +1,4 @@
-import { LoadResult } from '../router';
+import { SuccessResult } from '../router';
 import {
   MetaData,
   Meta,
@@ -110,7 +110,7 @@ function resolveRobots(result: MetaData[], meta: Meta) {
   }
 }
 
-export default function resolveMeta<T>(source: LoadResult<T>): MetaData[] {
+export default function resolveMeta<T>(source: SuccessResult<T>): MetaData[] {
   let result: MetaData[] = [];
 
   if (source.meta) {

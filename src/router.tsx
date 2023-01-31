@@ -8,6 +8,7 @@ import {
   Suspense,
   useContext,
 } from 'solid-js';
+import NotFound from './404';
 import useMeta from './internal/meta/use-meta';
 import {
   createRouterTree,
@@ -20,11 +21,7 @@ import {
 
 const Data = createContext<{ data: LoadResult<any>, initial: boolean }>();
 
-export interface PageProps<T> {
-  data: T;
-}
-
-function createPage<T>(Comp: (props: PageProps<T>) => JSX.Element): () => JSX.Element {
+function createPage<T>(Comp: (props: T) => JSX.Element): () => JSX.Element {
   return function CustomPage() {
     const ctx = useContext(Data)!;
     const router = useRouter();
@@ -51,10 +48,17 @@ function createPage<T>(Comp: (props: PageProps<T>) => JSX.Element): () => JSX.El
       <Suspense>
         <Show when={data()} keyed>
           {(loaded) => {
+            if ('redirect' in loaded) {
+              router.push(loaded.redirect);
+              return null;
+            }
+            if ('notFound' in loaded) {
+              return <NotFound />;
+            }
             if (!ctx.initial) {
               useMeta(loaded);
             }
-            return <Comp data={loaded.props} />;
+            return <Comp {...loaded.props} />;
           }}
         </Show>
       </Suspense>
@@ -108,6 +112,7 @@ export default function RouterRenderer<T>(props: RouterProps<T>): JSX.Element {
           pathname: props.pathname,
           search: props.search,
         }}
+        fallback={NotFound}
       />
     </Data.Provider>
   );
