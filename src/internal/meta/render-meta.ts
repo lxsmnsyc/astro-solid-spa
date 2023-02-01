@@ -2,7 +2,7 @@ import { SuccessResult } from '../router';
 import { MetaData } from './interface';
 import resolveMeta from './resolve-meta';
 
-// https://www.w3.org/TR/html/syntax.html#void-elements
+// https://github.com/ryansolid/dom-expressions/blob/main/packages/babel-plugin-jsx-dom-expressions/src/VoidElements.js
 const VOID_ELEMENTS = new Set([
   'area',
   'base',
@@ -12,7 +12,9 @@ const VOID_ELEMENTS = new Set([
   'hr',
   'img',
   'input',
+  'keygen',
   'link',
+  'menuitem',
   'meta',
   'param',
   'source',
