@@ -1,10 +1,10 @@
 ---
-import RenderMeta from './internal/meta/render-meta.astro';
+import renderMeta from './internal/meta/render-meta';
 import { LoadResult } from './internal/router';
 import { Renderer } from './router';
 
-interface Props extends LoadResult<any> {
-
+interface Props {
+  data: LoadResult<any>;
 }
 
 ---
@@ -12,7 +12,7 @@ interface Props extends LoadResult<any> {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <RenderMeta {...(Astro.props.data ?? {})} />
+    {'meta' in Astro.props.data && <Fragment set:html={renderMeta(Astro.props.data)} />}
   </head>
   <body>
     <div class="flex items-center justify-center bg-gradient-to-l from-sky-400 to-indigo-600 min-h-screen">
