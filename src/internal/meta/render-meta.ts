@@ -2,25 +2,8 @@ import { SuccessResult } from '../router';
 import { MetaData } from './interface';
 import resolveMeta from './resolve-meta';
 
-// https://github.com/ryansolid/dom-expressions/blob/main/packages/babel-plugin-jsx-dom-expressions/src/VoidElements.js
-const VOID_ELEMENTS = new Set([
-  'area',
-  'base',
-  'br',
-  'col',
-  'embed',
-  'hr',
-  'img',
-  'input',
-  'keygen',
-  'link',
-  'menuitem',
-  'meta',
-  'param',
-  'source',
-  'track',
-  'wbr',
-]);
+// https://github.com/ryansolid/dom-expressions/blob/main/packages/lit-dom-expressions/src/index.ts#L35
+const VOID_ELEMENTS = /^(?:area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)$/i;
 
 // https://github.com/ryansolid/dom-expressions/blob/main/packages/dom-expressions/src/constants.js#L1-L26
 const BOOLEAN_ATTRS = new Set([
@@ -112,7 +95,7 @@ function renderToString(el: MetaData) {
     }
   }
 
-  if (VOID_ELEMENTS.has(el.tag)) {
+  if (VOID_ELEMENTS.test(el.tag)) {
     return `${result}/>`;
   }
   return `${result}>${el.content ?? ''}</${el.tag}>`;
