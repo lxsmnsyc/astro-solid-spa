@@ -1,7 +1,7 @@
 ---
 import renderMeta from './internal/meta/render-meta';
 import { LoadResult } from './internal/router';
-import { Renderer } from './router';
+import PageRouter from './page-router';
 
 interface Props {
   data: LoadResult<any>;
@@ -16,7 +16,7 @@ interface Props {
   </head>
   <body>
     <div class="flex items-center justify-center bg-gradient-to-l from-sky-400 to-indigo-600 min-h-screen">
-      <Renderer
+      <PageRouter
         client:load
         data={Astro.props.data}
         pathname={Astro.url.pathname}

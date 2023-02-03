@@ -1,15 +1,12 @@
 ---
 import { LoadResult } from '../internal/router';
+import getLoader from '../load-router';
 import Root from '../root.astro';
-import { getLoader } from '../router';
 
 const loader = getLoader(Astro.url);
 let data: LoadResult<any> = { props: undefined };
 if (loader && loader.value) {
-  const callback = await loader.value();
-  if (callback) {
-    data = await callback(Astro.request, loader.params);
-  }
+    data = await loader.value(Astro.request, loader.params);
 }
 if (Astro.url.searchParams.has('.get')) {
   return new Response(JSON.stringify(data), {

@@ -3,7 +3,6 @@ import {
   createContext,
   createResource,
   JSX,
-  lazy,
   onMount,
   Show,
   Suspense,
@@ -12,10 +11,10 @@ import {
 import useMeta from '../meta/use-meta';
 import {
   createRouterTree,
+  Load,
   LoadResult,
   matchRoute,
   Router,
-  SSRPage,
   useRouter,
 } from '../router';
 
@@ -77,14 +76,33 @@ function normalizeRoute(path: string, offset: number): string {
   return base;
 }
 
+export interface LoaderConfig {
+  routes: {
+    path: string;
+    imports: Record<string, Load>;
+  };
+}
+
 export interface RendererConfig {
   routes: {
     path: string;
-    imports: Record<string, () => Promise<SSRPage>>;
+    imports: Record<string, () => JSX.Element>;
   };
   pages: {
     404: () => JSX.Element;
   };
+}
+
+export function defineLoaderRouter(config: LoaderConfig) {
+  const offset = config.routes.path.length;
+  const rawLoaders = Object.entries(config.routes.imports)
+    .map(([key, value]) => ({
+      path: normalizeRoute(key, offset),
+      value,
+    }));
+  const loaders = createRouterTree(rawLoaders);
+
+  return (url: URL) => matchRoute(loaders, url.pathname);
 }
 
 export interface RouterProps<T> {
@@ -93,30 +111,18 @@ export interface RouterProps<T> {
   search: string;
 }
 
-export default function defineRenderer(config: RendererConfig) {
+export function definePageRouter(config: RendererConfig) {
   const offset = config.routes.path.length;
-  const normalizedRoutes = Object.entries(config.routes.imports)
-    .map(([key, value]) => [normalizeRoute(key, offset), value] as const);
-  const rawPages = normalizedRoutes
+  const rawPages = Object.entries(config.routes.imports)
     .map(([key, value]) => ({
-      path: key,
-      value: createPage(lazy(value), config.pages[404]),
-    }));
-  const rawLoaders = normalizedRoutes
-    .map(([key, value]) => ({
-      path: key,
-      value: async () => {
-        const result = await value();
-        return result.load;
-      },
+      path: normalizeRoute(key, offset),
+      value: createPage(value, config.pages[404]),
     }));
 
   const pages = createRouterTree(rawPages);
-  const loaders = createRouterTree(rawLoaders);
 
-  return {
-    getLoader: (url: URL) => matchRoute(loaders, url.pathname),
-    Renderer: <T, >(props: RouterProps<T>) => (
+  return function Renderer<T>(props: RouterProps<T>) {
+    return (
       <Data.Provider value={{ initial: true, data: props.data }}>
         <Router
           routes={pages}
@@ -127,6 +133,6 @@ export default function defineRenderer(config: RendererConfig) {
           fallback={config.pages[404]}
         />
       </Data.Provider>
-    ),
+    );
   };
 }
