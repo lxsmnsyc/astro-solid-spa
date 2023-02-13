@@ -71,7 +71,7 @@ function createPage<T>(
 function normalizeRoute(path: string, offset: number): string {
   const base = path.substring(offset, path.length - 4);
   if (base.endsWith('/index')) {
-    return base.substring(0, base.length - 5);
+    return base.substring(0, base.length - 6);
   }
   return base;
 }
