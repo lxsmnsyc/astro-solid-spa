@@ -70,10 +70,10 @@ function createPage<T>(
 
 function normalizeRoute(path: string, offset: number): string {
   const base = path.substring(offset, path.length - 4);
+  if (base === '/index') {
+    return '/';
+  }
   if (base.endsWith('/index')) {
-    if (base === '/index') {
-      return '/';
-    }
     return base.substring(0, base.length - 6);
   }
   return base;

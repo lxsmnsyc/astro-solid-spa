@@ -183,7 +183,10 @@ export function matchRoute<T, P extends RouterParams = RouterParams>(
   parent: RouterNode<T>,
   route: string,
 ): RouterResult<T, P> | undefined {
-  return matchRouteInternal(parent, route.split('/'));
+  const normalizedRoute = route !== '/' && route.endsWith('/')
+    ? route.substring(0, route.length - 1)
+    : route;
+  return matchRouteInternal(parent, normalizedRoute.split('/'));
 }
 
 export interface Route<T> {
