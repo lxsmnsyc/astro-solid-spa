@@ -37,14 +37,14 @@ function useSWRStore<T, P extends any[] = []>(
   return resource as Resource<T | undefined>;
 }
 
-const CacheContext = createContext<SWRStore<any, any>>();
+const CacheContext = createContext<SWRStore<any, RouterInstance<RouterParams>[]>>();
 
 interface CacheProps {
   children: JSX.Element;
 }
 
 export function CacheBoundary(props: CacheProps) {
-  const store = createSWRStore<LoadResult<any>, [RouterInstance<RouterParams>]>({
+  const store = createSWRStore<LoadResult<any>, RouterInstance<RouterParams>[]>({
     key: (router) => `${router.pathname}?${new URLSearchParams(router.search).toString()}`,
     get: async (router) => {
       const params = new URLSearchParams(router.search);
