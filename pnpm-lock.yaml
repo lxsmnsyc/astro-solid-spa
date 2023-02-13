@@ -4,24 +4,28 @@ specifiers:
   '@astrojs/node': ^5.0.3
   '@astrojs/solid-js': ^2.0.0
   '@astrojs/tailwind': ^3.0.0
-  astro: ^2.0.2
+  astro: ^2.0.6
   autoprefixer: ^10.4.13
   eslint: ^8.32.0
   eslint-config-lxsmnsyc: ^0.4.8
   postcss: ^8.4.21
   solid-js: ^1.6.9
+  solid-swr-store: ^0.10.5
+  swr-store: ^0.10.5
   tailwindcss: ^3.2.4
   typescript: ^4.9.4
 
 dependencies:
-  '@astrojs/node': 5.0.3_astro@2.0.2
+  '@astrojs/node': 5.0.3_astro@2.0.10
   '@astrojs/solid-js': 2.0.0_solid-js@1.6.9
-  '@astrojs/tailwind': 3.0.0_uhsc6pehih5huiqhsy5i7sy5um
+  '@astrojs/tailwind': 3.0.0_4f5srnz5te7bft5a35u2wwbs3u
   solid-js: 1.6.9
+  solid-swr-store: 0.10.5_ctrygeborrnsfbwyvj3priahjq
+  swr-store: 0.10.5
   tailwindcss: 3.2.4_postcss@8.4.21
 
 devDependencies:
-  astro: 2.0.2
+  astro: 2.0.10
   autoprefixer: 10.4.13_postcss@8.4.21
   eslint: 8.32.0
   eslint-config-lxsmnsyc: 0.4.8_7uibuqfxkfaozanbtbziikiqje
@@ -40,8 +44,8 @@ packages:
   /@astrojs/compiler/0.31.4:
     resolution: {integrity: sha512-6bBFeDTtPOn4jZaiD3p0f05MEGQL9pw2Zbfj546oFETNmjJFWO3nzHz6/m+P53calknCvyVzZ5YhoBLIvzn5iw==}
 
-  /@astrojs/compiler/1.0.1:
-    resolution: {integrity: sha512-77aacobLKcL98NmhK3OBS5EHIrX9gs1ckB/vGSIdkVZuB7u51V4jh05I6W0tSvG7/86tALv6QtHTRZ8rLhFTbQ==}
+  /@astrojs/compiler/1.1.0:
+    resolution: {integrity: sha512-C4kTwirys+HafufMqaxCbML2wqkGaXJM+5AekXh/v1IIOnMIdcEON9GBYsG6qa8aAmLhZ58aUZGPhzcA3Dx7Uw==}
 
   /@astrojs/language-server/0.28.3:
     resolution: {integrity: sha512-fPovAX/X46eE2w03jNRMpQ7W9m2mAvNt4Ay65lD9wl1Z5vIQYxlg7Enp9qP225muTr4jSVB5QiLumFJmZMAaVA==}
@@ -60,13 +64,13 @@ packages:
       vscode-languageserver-types: 3.17.2
       vscode-uri: 3.0.7
 
-  /@astrojs/markdown-remark/2.0.1_astro@2.0.2:
+  /@astrojs/markdown-remark/2.0.1_astro@2.0.10:
     resolution: {integrity: sha512-xQF1rXGJN18m+zZucwRRtmNehuhPMMhZhi6HWKrtpEAKnHSPk8lqf1GXgKH7/Sypglu8ivdECZ+EGs6kOYVasQ==}
     peerDependencies:
       astro: ^2.0.2
     dependencies:
       '@astrojs/prism': 2.0.0
-      astro: 2.0.2
+      astro: 2.0.10
       github-slugger: 1.5.0
       import-meta-resolve: 2.2.1
       rehype-raw: 6.1.1
@@ -82,13 +86,13 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@astrojs/node/5.0.3_astro@2.0.2:
+  /@astrojs/node/5.0.3_astro@2.0.10:
     resolution: {integrity: sha512-zjyTE7ZWkwmJGbg1r7lOQJqRREqDV+yu2Qb4VTiJ8zek9ts4JD3syKRXXJxf9W2lhtIOMbukDmupIa+0Hkxq/w==}
     peerDependencies:
       astro: ^2.0.6
     dependencies:
       '@astrojs/webapi': 2.0.0
-      astro: 2.0.2
+      astro: 2.0.10
       send: 0.18.0
       server-destroy: 1.0.1
     transitivePeerDependencies:
@@ -115,14 +119,14 @@ packages:
       - vite
     dev: false
 
-  /@astrojs/tailwind/3.0.0_uhsc6pehih5huiqhsy5i7sy5um:
+  /@astrojs/tailwind/3.0.0_4f5srnz5te7bft5a35u2wwbs3u:
     resolution: {integrity: sha512-Ul0LzTIW+QD/qXUaTDSDoe/uNOPSAX6Ce7yTMzl7v+9OlZ4vlgkj1CUq/WkhlKnJ2+SnJvLArEj6yYs/M2V8nA==}
     peerDependencies:
       astro: ^2.0.0
       tailwindcss: ^3.0.24
     dependencies:
       '@proload/core': 0.3.3
-      astro: 2.0.2
+      astro: 2.0.10
       autoprefixer: 10.4.13_postcss@8.4.21
       postcss: 8.4.21
       postcss-load-config: 4.0.1_postcss@8.4.21
@@ -1110,14 +1114,14 @@ packages:
     resolution: {integrity: sha512-eBvWn1lvIApYMhzQMsu9ciLfkBY499mFZlNqG+/9WR7PVlroQw0vG30cOQQbaKz3sCEc44TAOu2ykzqXSNnwag==}
     dev: true
 
-  /astro/2.0.2:
-    resolution: {integrity: sha512-47N1jLWNxSri7kWfIfgcEnQJZWTvd0gXhNC3P2ZHiiurl4nOxFC5ULsW5MDDTjTzQ1S7y1RoaL9XxYm+Rury7w==}
+  /astro/2.0.10:
+    resolution: {integrity: sha512-Jg2JYPA6Nlip27So1+O0p9VFL98H+LiDLEt+F65e6536LkWE5oiV0fDSbK8aI8hKeCvOQzLiEZiD21eXbug0XQ==}
     engines: {node: '>=16.12.0', npm: '>=6.14.0'}
     hasBin: true
     dependencies:
-      '@astrojs/compiler': 1.0.1
+      '@astrojs/compiler': 1.1.0
       '@astrojs/language-server': 0.28.3
-      '@astrojs/markdown-remark': 2.0.1_astro@2.0.2
+      '@astrojs/markdown-remark': 2.0.1_astro@2.0.10
       '@astrojs/telemetry': 2.0.0
       '@astrojs/webapi': 2.0.0
       '@babel/core': 7.20.12
@@ -4138,6 +4142,17 @@ packages:
       csstype: 3.1.1
     dev: false
 
+  /solid-swr-store/0.10.5_ctrygeborrnsfbwyvj3priahjq:
+    resolution: {integrity: sha512-XWrB2DI89GuQ4chJixGqvdZFH7tvv3MuTIzbG1iUoeIuyBNfBl2YqJ566bgigZ3hh3VknfpNjQ3m4TND/v6esg==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      solid-js: ^1.2
+      swr-store: ^0.10
+    dependencies:
+      solid-js: 1.6.9
+      swr-store: 0.10.5
+    dev: false
+
   /source-map-js/1.0.2:
     resolution: {integrity: sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==}
     engines: {node: '>=0.10.0'}
@@ -4282,6 +4297,13 @@ packages:
   /supports-preserve-symlinks-flag/1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
+
+  /swr-store/0.10.5:
+    resolution: {integrity: sha512-V4yAqVGoscuRIkX0mvKnsMYX6phkIob1HLBQ05Mz7Y795SYdf3bywLlQ7+PFrmheVb08+TkK3iFGRK/UqM0qlQ==}
+    engines: {node: '>=10'}
+    dependencies:
+      dequal: 2.0.3
+    dev: false
 
   /synckit/0.8.4:
     resolution: {integrity: sha512-Dn2ZkzMdSX827QbowGbU/4yjWuvNaCoScLLoMo/yKbu+P4GBR6cRGKZH27k6a9bRzdqcyd1DE96pQtQ6uNkmyw==}

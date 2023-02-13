@@ -9,7 +9,7 @@
     "preview": "astro preview"
   },
   "devDependencies": {
-    "astro": "^2.0.2",
+    "astro": "^2.0.6",
     "autoprefixer": "^10.4.13",
     "eslint": "^8.32.0",
     "eslint-config-lxsmnsyc": "^0.4.8",
@@ -21,6 +21,8 @@
     "@astrojs/solid-js": "^2.0.0",
     "@astrojs/tailwind": "^3.0.0",
     "solid-js": "^1.6.9",
+    "solid-swr-store": "^0.10.5",
+    "swr-store": "^0.10.5",
     "tailwindcss": "^3.2.4"
   }
 }

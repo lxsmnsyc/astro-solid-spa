@@ -1,7 +1,6 @@
 import {
   createComponent,
   createContext,
-  createResource,
   JSX,
   onMount,
   Show,
@@ -17,6 +16,7 @@ import {
   Router,
   useRouter,
 } from '../router';
+import { CacheBoundary, useCache } from './cache';
 
 const Data = createContext<{ data: LoadResult<any>, initial: boolean }>();
 
@@ -27,19 +27,10 @@ function createPage<T>(
   return function CustomPage() {
     const ctx = useContext(Data)!;
     const router = useRouter();
-
-    const [data] = createResource(
-      async () => {
-        const params = new URLSearchParams(router.search);
-        params.set('.get', '');
-        const response = await fetch(`${router.pathname}?${params.toString()}`);
-        const result = (await response.json()) as LoadResult<T>;
-        return result;
-      },
-      ctx.initial ? {
-        initialValue: ctx.data as LoadResult<T>,
-        ssrLoadFrom: 'initial',
-      } : {},
+    const data = useCache(
+      ctx.initial
+        ? { initialData: ctx.data as LoadResult<T> }
+        : { shouldRevalidate: true },
     );
 
     onMount(() => {
@@ -70,10 +61,10 @@ function createPage<T>(
 
 function normalizeRoute(path: string, offset: number): string {
   const base = path.substring(offset, path.length - 4);
-  if (base === '/index') {
-    return '/';
-  }
   if (base.endsWith('/index')) {
+    if (base === '/index') {
+      return '/';
+    }
     return base.substring(0, base.length - 6);
   }
   return base;
@@ -126,16 +117,18 @@ export function definePageRouter(config: RendererConfig) {
 
   return function Renderer<T>(props: RouterProps<T>) {
     return (
-      <Data.Provider value={{ initial: true, data: props.data }}>
-        <Router
-          routes={pages}
-          location={{
-            pathname: props.pathname,
-            search: props.search,
-          }}
-          fallback={config.pages[404]}
-        />
-      </Data.Provider>
+      <CacheBoundary>
+        <Data.Provider value={{ initial: true, data: props.data }}>
+          <Router
+            routes={pages}
+            location={{
+              pathname: props.pathname,
+              search: props.search,
+            }}
+            fallback={config.pages[404]}
+          />
+        </Data.Provider>
+      </CacheBoundary>
     );
   };
 }
