@@ -31,9 +31,17 @@ export default function Router(
 ): JSX.Element {
   const location = useLocation(() => props.routes, props.location);
 
-  const matchedRoute = createMemo(() => (
-    matchRoute(props.routes, location.pathname)
-  ));
+  const pathname = createMemo(() => {
+    const route = location.pathname;
+
+    return route !== '/' && route.endsWith('/')
+      ? route.substring(0, route.length - 1)
+      : route;
+  });
+
+  const matchedRoute = () => (
+    matchRoute(props.routes, pathname())
+  );
 
   return (
     <LocationContext.Provider value={location}>
